@@ -471,7 +471,7 @@ void EngineSync::notifyScratching(Syncable* pSyncable, bool scratching) {
             auto* engineBuffer = pSyncable->getChannel()->getEngineBuffer();
             DEBUG_ASSERT(engineBuffer);
 
-            const auto playPos = engineBuffer->getVisualPlayPos();
+            const auto playPos = engineBuffer->getExactPlayPos().value();
             const auto trackEnd = engineBuffer->getTrackEndPosition().value();
             const auto trackSampleRate = engineBuffer->getTrackSampleRate();
             const auto bpmValue = pSyncable->getBpm().value();

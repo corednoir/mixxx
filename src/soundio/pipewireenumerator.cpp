@@ -13,6 +13,7 @@
 #include <QMetaObject>
 #include <QSharedPointer>
 #include <QStringView>
+#include <chrono>
 #include <ranges>
 #include <string>
 
@@ -741,7 +742,7 @@ void PipewireEnumerator::callback(const spa_io_position* pos) {
         m_pSoundManager->pushInputBuffer(input, framesPerBuffer);
     }
 
-    m_pSoundManager->onDeviceOutputCallback(framesPerBuffer);
+    m_pSoundManager->onDeviceOutputCallback(framesPerBuffer, std::chrono::microseconds(pos->clock.nsec / 1000));
 
     for (const auto& [output, ports] : m_outputs) {
         if (!ports.active.load()) {
